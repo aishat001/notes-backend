@@ -3,6 +3,7 @@ const cors = require('cors')
 const app = express()
 
 app.use(express.json())
+app.use(express.static('build'))
 app.use(cors())
 
 
@@ -21,7 +22,19 @@ let notes = [
   },
   {
     id: 3,
-    content: "GET and POST are the most important methods of HTTP protocol",
+    content: "GET and POST ",
+    date: "2020-01-10T19:20:14.298Z",
+    important: true
+  },
+  {
+    id: 4,
+    content: "lorem",
+    date: "2020-01-10T19:20:14.298Z",
+    important: false
+  },
+  {
+    id: 5,
+    content: "GET ",
     date: "2020-01-10T19:20:14.298Z",
     important: true
   }
