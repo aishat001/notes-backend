@@ -8,25 +8,25 @@ app.use(express.static('build'))
 app.use(cors())
 app.use(express.json())
 
-const errorHandler = (error, request, response, next) => {
-  console.error(error.message)
+// const errorHandler = (error, request, response, next) => {
+//   console.error(error.message)
 
-  if (error.name === 'CastError') {
-    return response.status(400).send({ error: 'malformatted id' })
-  }
+//   if (error.name === 'CastError') {
+//     return response.status(400).send({ error: 'malformatted id' })
+//   }
 
-  next(error)
-}
+//   next(error)
+// }
 
-const requestLogger = (request, response, next) => {
-  console.log('Method:', request.method)
-  console.log('Path:  ', request.path)
-  console.log('Body:  ', request.body)
-  console.log('---')
-  next()
-}
+// const requestLogger = (request, response, next) => {
+//   console.log('Method:', request.method)
+//   console.log('Path:  ', request.path)
+//   console.log('Body:  ', request.body)
+//   console.log('---')
+//   next()
+// }
 
-app.use(requestLogger)
+// app.use(requestLogger)
 
 app.get('/api/notes', (req, res) => {
   Note.find({}).then(notes => {
