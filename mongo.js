@@ -10,7 +10,7 @@ const password = process.argv[2]
 const url =
     `mongodb+srv://fullstack:${password}@cluster0.fkubm.mongodb.net/note-app?retryWrites=true&w=majority`
 
-mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false, useCreateIndex: true })
+// mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false, useCreateIndex: true })
 
 const noteSchema = new mongoose.Schema({
   content: String,
@@ -40,7 +40,7 @@ const note = new Note(
 //     mongoose.connection.close()
 // })
 
-note.save().then(result => {
-  console.log('note saved!')
-  mongoose.connection.close()
-})
+// note.save().then(result => {
+//   console.log('note saved!')
+//   mongoose.connection.close()
+// })
