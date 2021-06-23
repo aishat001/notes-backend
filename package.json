@@ -4,13 +4,14 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
-    "dev": "nodemon index.js",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build:ui": "rm -rf build && cd ../part2-notes/ && npm run build --prod && cp -r build ../notes-backend",
+    "start": "NODE_ENV=production node index.js",
+    "dev": "NODE_ENV=development nodemon index.js",
+    "build:ui": "rm -rf build && cd ../Fullstack-open/part2/notes && npm run build --prod && cp -r build ../notes-backend",
     "deploy": "git push heroku main",
     "deploy:full": "npm run build:ui && git add . && git commit -m uibuild && git push && npm run deploy",
-    "logs:prod": "heroku logs --tail"
+    "logs:prod": "heroku logs --tail",
+    "lint": "eslint .",
+    "test": "NODE_ENV=test jest --verbose --runInBand"
   },
   "author": "Waheed Aishat",
   "license": "ISC",
@@ -22,8 +23,11 @@
     "mongoose": "^5.12.14"
   },
   "devDependencies": {
-    "nodemon": "^2.0.7",
-    "eslint": "^7.29.0"
-
+    "eslint": "^7.29.0",
+    "jest": "^27.0.5",
+    "nodemon": "^2.0.7"
+  },
+  "jest": {
+    "testEnvironment": "node"
   }
 }
