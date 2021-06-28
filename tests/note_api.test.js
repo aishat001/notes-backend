@@ -3,15 +3,17 @@ const mongoose = require('mongoose')
 const helper = require('./test_helper')
 const app = require('../app')
 const api = supertest(app)
-
 const Note = require('../models/note')
+const logger = require('../utils/logger')
 
 beforeEach(async () => {
+  jest.setTimeout(20000)
   await Note.deleteMany({})
   await Note.insertMany(helper.initialNotes)
 })
 
 describe('when there is initially some notes saved', () => {
+  
   test('notes are returned as json', async () => {
     await api
       .get('/api/notes')
@@ -55,7 +57,7 @@ describe('viewing a specific note', () => {
   test('fails with statuscode 404 if note does not exist', async () => {
     const validNonexistingId = await helper.nonExistingId()
 
-    console.log(validNonexistingId)
+    logger.error(validNonexistingId)
 
     await api
       .get(`/api/notes/${validNonexistingId}`)

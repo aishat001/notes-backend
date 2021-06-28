@@ -1,8 +1,10 @@
 const bcrypt = require('bcrypt')
+const { Mongoose } = require('mongoose')
+const helper = require('./test_helper')
 const User = require('../models/user')
 
 describe('when there is initially one user in db', () => {
-    // setTimeout(20000)
+    jest.setTimeout(20000)
     beforeEach(async () => {
         const passwordHash = await bcrypt.hash('sekret', 10)
         const user = new User({
@@ -13,6 +15,7 @@ describe('when there is initially one user in db', () => {
     })
 
     test('creation succeeds with a fresh username', async () => {
+        // jest.setTimeout(20000)
         const usersAtStart = await helper.usersInDb()
 
         const newUser = {
@@ -20,7 +23,6 @@ describe('when there is initially one user in db', () => {
             name: 'Waheed Aeeshah',
             password: 'salainen',
         }
-
         await api
             .post('/api/users')
             .send(newUser)
@@ -34,7 +36,23 @@ describe('when there is initially one user in db', () => {
             expect(usernames).toContain(newUser.username)
     })
 
-//    test('', async () => {
-
-//     }) 
+    test('creation fails with proper statuscode and message if username already taken', async () => {
+        const usersAtStart = await helper.usersInDb()
+        const newUser = {
+          username: 'root',
+          name: 'Superuser',
+          password: 'salainen',
+        }
+    
+        const result = await api
+          .post('/api/users')
+          .send(newUser)
+          .expect(400)
+          .expect('Content-Type', /application\/json/)
+    
+        expect(result.body.error).toContain('`username` to be unique')
+    
+        const usersAtEnd = await helper.usersInDb()
+        expect(usersAtEnd).toHaveLength(usersAtStart.length)
+      }) 
 })
