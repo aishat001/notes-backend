@@ -4,7 +4,8 @@ const mongoose = require('mongoose')
 require('express-async-errors')
 const app = express()
 const cors = require('cors')
-const noteRouter = require('./controllers/notes')
+const notesRouter = require('./controllers/notes')
+const usersRouter = require('./controllers/users')
 const middleware = require('./utils/middleware')
 const logger = require('./utils/logger')
 
@@ -31,10 +32,10 @@ mongoose.connect(config.MONGODB_URI, {
 app.use(express.static('build'))
 app.use(cors())
 app.use(express.json())
-app.use('/api/notes', noteRouter)
+app.use('/api/notes', notesRouter)
+app.use('/api/users', usersRouter)
 app.use(middleware.requestLogger)
 app.use(middleware.unknownEndpoint)
 app.use(middleware.errorHandler)
-
 
 module.exports = app
